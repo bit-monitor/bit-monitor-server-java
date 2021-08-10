@@ -69,7 +69,11 @@ public class UserService extends ServiceBase {
      * @return Object
      */
     public Object get(HttpServletRequest request) throws Exception {
-        int isNeedPaging = DataConvertUtils.strToInt(request.getParameter("isNeedPaging"));
+        String isNeedPagingParam = request.getParameter("isNeedPaging");
+        if (isNeedPagingParam == null) {
+            throw new Exception("isNeedPaging参数不正确");
+        }
+        int isNeedPaging = DataConvertUtils.strToInt(isNeedPagingParam);
         if (isNeedPaging == 0) {
             // 不需要分页
             return userDao.findAll();
